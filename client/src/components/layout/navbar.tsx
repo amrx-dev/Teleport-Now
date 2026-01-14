@@ -55,21 +55,44 @@ export function Navbar() {
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuItem className="font-medium">
-                  <User className="mr-2 h-4 w-4" />
-                  <span>{user.firstName} {user.lastName}</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/profile" className="cursor-pointer">
-                    My Missions
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => logout()} className="text-red-500 focus:text-red-500">
-                  <LogOut className="mr-2 h-4 w-4" />
-                  <span>Log out</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
+                <DropdownMenuContent className="w-64 p-2 rounded-2xl" align="end" forceMount>
+                  <div className="px-3 py-3 border-b border-slate-100 mb-2">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Wallet Balance</p>
+                    <p className="text-2xl font-black text-primary">$50.00</p>
+                  </div>
+                  <div className="px-3 py-2">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Recent Teleports</p>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-50 border border-slate-100">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <Zap className="w-4 h-4 text-primary" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold">Tokyo Session</p>
+                          <p className="text-[10px] text-slate-500">2 days ago</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-2 rounded-xl bg-slate-50 border border-slate-100">
+                        <div className="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center">
+                          <Globe className="w-4 h-4 text-indigo-500" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold">London Tour</p>
+                          <p className="text-[10px] text-slate-500">Last week</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="h-px bg-slate-100 my-2" />
+                  <DropdownMenuItem className="font-medium rounded-xl h-11">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>{user.firstName} {user.lastName}</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => logout()} className="text-red-500 focus:text-red-500 rounded-xl h-11">
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
             </DropdownMenu>
           ) : (
             <a href="/api/login">

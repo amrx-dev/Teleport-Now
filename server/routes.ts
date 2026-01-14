@@ -135,6 +135,50 @@ export async function registerRoutes(
           description: "Professional proxy for business meetings and cultural insights in Riyadh.",
           imageUrl: "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
           isAvailable: true
+        },
+        {
+          name: "Omar Al-Farsi",
+          location: "Amman, Jordan",
+          latitude: 31.9454,
+          longitude: 35.9284,
+          rating: 4.8,
+          specialties: ["Real Estate Inspection", "Local Market Shopping"],
+          description: "Amman local expert with deep knowledge of the city's real estate and traditional markets.",
+          imageUrl: "https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+          isAvailable: true
+        },
+        {
+          name: "Layla Hassan",
+          location: "Cairo, Egypt",
+          latitude: 30.0444,
+          longitude: 31.2357,
+          rating: 4.7,
+          specialties: ["Local Market Shopping", "History Tour"],
+          description: "Cairo shopping guide specializing in Khan el-Khalili and local artisanal products.",
+          imageUrl: "https://images.unsplash.com/photo-1567532939604-b6c5b0ad2e01?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+          isAvailable: true
+        },
+        {
+          name: "Zaid Al-Mutairi",
+          location: "Kuwait City, Kuwait",
+          latitude: 29.3759,
+          longitude: 47.9774,
+          rating: 4.9,
+          specialties: ["Real Estate Inspection", "Business Scouting"],
+          description: "Trusted business and property proxy in Kuwait City for international clients.",
+          imageUrl: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+          isAvailable: true
+        },
+        {
+          name: "Ahmed Mansour",
+          location: "Dubai, UAE",
+          latitude: 25.2048,
+          longitude: 55.2708,
+          rating: 5.0,
+          specialties: ["Luxury Real Estate", "Personal Shopping"],
+          description: "Specializing in premium property viewings and high-end retail experiences in Dubai.",
+          imageUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+          isAvailable: true
         }
       ];
 
