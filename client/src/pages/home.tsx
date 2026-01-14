@@ -8,7 +8,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, Globe, Shield, Zap, Search, Loader2, Video, X, Maximize2 } from "lucide-react";
+import { ArrowRight, Globe, Shield, Zap, Search, Loader2, Video, X, Maximize2, MapPin } from "lucide-react";
 
 export default function Home() {
   const { data: proxies = [], isLoading } = useProxies();
