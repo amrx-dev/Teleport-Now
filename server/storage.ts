@@ -2,12 +2,15 @@ import { db } from "./db";
 import {
   proxies,
   bookings,
+  messages,
   type Proxy,
   type InsertProxy,
   type Booking,
   type InsertBooking,
+  type Message,
+  type InsertMessage,
 } from "@shared/schema";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 export interface IStorage {
   getProxies(): Promise<Proxy[]>;
@@ -15,6 +18,8 @@ export interface IStorage {
   createProxy(proxy: InsertProxy): Promise<Proxy>;
   createBooking(booking: InsertBooking & { userId: string }): Promise<Booking>;
   getBookingsByUser(userId: string): Promise<Booking[]>;
+  getMessages(proxyId: number, userId: string): Promise<Message[]>;
+  createMessage(message: InsertMessage): Promise<Message>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -39,6 +44,18 @@ export class DatabaseStorage implements IStorage {
 
   async getBookingsByUser(userId: string): Promise<Booking[]> {
     return await db.select().from(bookings).where(eq(bookings.userId, userId));
+  }
+
+  async getMessages(proxyId: number, userId: string): Promise<Message[]> {
+    return await db
+      .select()
+      .from(messages)
+      .where(and(eq(messages.proxyId, proxyId), eq(messages.userId, userId)));
+  }
+
+  async createMessage(message: InsertMessage): Promise<Message> {
+    const [newMessage] = await db.insert(messages).values(message).returning();
+    return newMessage;
   }
 }
 

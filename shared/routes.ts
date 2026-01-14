@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertProxySchema, insertBookingSchema, proxies, bookings } from './schema';
+import { insertProxySchema, insertBookingSchema, insertMessageSchema, proxies, bookings, messages } from './schema';
 
 export const api = {
   proxies: {
@@ -39,4 +39,35 @@ export const api = {
         }
     }
   },
+  messages: {
+    list: {
+      method: 'GET' as const,
+      path: '/api/messages/:proxyId',
+      responses: {
+        200: z.array(z.custom<typeof messages.$inferSelect>()),
+        401: z.object({ message: z.string() }),
+      },
+    },
+    send: {
+      method: 'POST' as const,
+      path: '/api/messages',
+      input: insertMessageSchema.omit({ userId: true }),
+      responses: {
+        201: z.custom<typeof messages.$inferSelect>(),
+        401: z.object({ message: z.string() }),
+      },
+    },
+  },
 };
+
+export function buildUrl(path: string, params?: Record<string, string | number>): string {
+  let url = path;
+  if (params) {
+    Object.entries(params).forEach(([key, value]) => {
+      if (url.includes(`:${key}`)) {
+        url = url.replace(`:${key}`, String(value));
+      }
+    });
+  }
+  return url;
+}

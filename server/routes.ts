@@ -49,6 +49,33 @@ export async function registerRoutes(
       res.json(bookings);
   });
 
+  app.get(api.messages.list.path, isAuthenticated, async (req, res) => {
+    const proxyId = Number(req.params.proxyId);
+    const userId = (req.user as any).claims.sub;
+    const chatHistory = await storage.getMessages(proxyId, userId);
+    res.json(chatHistory);
+  });
+
+  app.post(api.messages.send.path, isAuthenticated, async (req, res) => {
+    try {
+      const input = api.messages.send.input.parse(req.body);
+      const userId = (req.user as any).claims.sub;
+      const message = await storage.createMessage({
+        ...input,
+        userId,
+      });
+      res.status(201).json(message);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({
+          message: err.errors[0].message,
+          field: err.errors[0].path.join('.'),
+        });
+      }
+      throw err;
+    }
+  });
+
   // Seed data function
   async function seedDatabase() {
     const existingProxies = await storage.getProxies();
