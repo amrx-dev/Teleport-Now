@@ -15,7 +15,7 @@ export function Navbar() {
   const [location] = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 glass border-b-0 rounded-none bg-white/80">
+    <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 glass border-b border-primary/10 rounded-none bg-white/60 backdrop-blur-xl">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group cursor-pointer">
           <div className="relative w-8 h-8 flex items-center justify-center bg-primary rounded-lg shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform duration-300">
