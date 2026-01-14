@@ -1,38 +1,45 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { db } from "./db";
+import {
+  proxies,
+  bookings,
+  type Proxy,
+  type InsertProxy,
+  type Booking,
+  type InsertBooking,
+} from "@shared/schema";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  getProxies(): Promise<Proxy[]>;
+  getProxy(id: number): Promise<Proxy | undefined>;
+  createProxy(proxy: InsertProxy): Promise<Proxy>;
+  createBooking(booking: InsertBooking & { userId: string }): Promise<Booking>;
+  getBookingsByUser(userId: string): Promise<Booking[]>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async getProxies(): Promise<Proxy[]> {
+    return await db.select().from(proxies);
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async getProxy(id: number): Promise<Proxy | undefined> {
+    const [proxy] = await db.select().from(proxies).where(eq(proxies.id, id));
+    return proxy;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+  async createProxy(insertProxy: InsertProxy): Promise<Proxy> {
+    const [proxy] = await db.insert(proxies).values(insertProxy).returning();
+    return proxy;
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async createBooking(booking: InsertBooking & { userId: string }): Promise<Booking> {
+    const [newBooking] = await db.insert(bookings).values(booking).returning();
+    return newBooking;
+  }
+
+  async getBookingsByUser(userId: string): Promise<Booking[]> {
+    return await db.select().from(bookings).where(eq(bookings.userId, userId));
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
