@@ -8,7 +8,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, Globe, Shield, Zap, Search, Loader2, Video, X, Maximize2, MapPin } from "lucide-react";
+import { ArrowRight, Globe, Shield, Zap, Search, Loader2, Video, X, Maximize2, MapPin, Headphones, CreditCard, CheckCircle2 } from "lucide-react";
 
 export default function Home() {
   const { data: proxies = [], isLoading } = useProxies();
@@ -17,6 +17,36 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isConnecting, setIsConnecting] = useState(false);
   const [showLiveFeed, setShowLiveFeed] = useState(false);
+
+  const pricingTiers = [
+    {
+      name: "Starter",
+      price: "$5",
+      period: "per trip",
+      description: "For one-time quick look-around.",
+      features: ["1 Live Teleport Session", "Standard HD Quality", "Direct Messaging", "24h Support"],
+      button: "Get Started",
+      highlight: false
+    },
+    {
+      name: "Explorer",
+      price: "$19",
+      period: "per month",
+      description: "For travelers and shoppers.",
+      features: ["5 Live Teleport Sessions", "Ultra HD Quality", "Priority Booking", "Direct Messaging", "24/7 Premium Support"],
+      button: "Start Free Trial",
+      highlight: true
+    },
+    {
+      name: "Enterprise",
+      price: "Custom",
+      period: "",
+      description: "For real estate and business inspections.",
+      features: ["Unlimited Teleports", "Custom Reporting", "Multi-Agent Support", "White-labeled Feed", "Dedicated Account Manager"],
+      button: "Contact Sales",
+      highlight: false
+    }
+  ];
 
   const handleBook = (proxy: Proxy) => {
     setSelectedProxy(proxy);
@@ -39,85 +69,82 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50/30">
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative pt-32 pb-24 px-6 overflow-hidden bg-gradient-to-b from-blue-50/50 to-white">
+      <section className="relative pt-40 pb-32 px-6 overflow-hidden bg-gradient-to-b from-blue-50/80 to-white">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
         
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10">
-          <div className="space-y-8">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center relative z-10">
+          <div className="space-y-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h1 className="text-6xl md:text-8xl font-bold leading-[1.05] text-slate-950 mb-6 tracking-tight">
+              <h1 className="text-7xl md:text-9xl font-bold leading-[0.95] text-slate-950 mb-8 tracking-tighter">
                 Be Anywhere, <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-500 to-indigo-400">
                   Instantly.
                 </span>
               </h1>
-              <p className="text-xl md:text-2xl text-slate-600 max-w-lg leading-relaxed font-medium">
-                The world's first human-proxy marketplace. Connect to local agents worldwide via ultra-low latency HD video.
+              <p className="text-2xl md:text-3xl text-slate-600 max-w-lg leading-relaxed font-semibold">
+                The world's first human-proxy marketplace. Connect to local agents worldwide via live video.
               </p>
             </motion.div>
             
             <motion.div 
-              className="flex flex-wrap gap-4"
+              className="flex flex-col gap-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <Button 
-                size="lg" 
-                className="h-16 px-10 rounded-2xl text-xl font-bold bg-slate-950 text-white hover:bg-slate-900 animate-pulse-subtle shadow-2xl shadow-slate-950/20"
-                onClick={scrollToMarketplace}
-              >
-                Start Teleporting
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="h-16 px-10 rounded-2xl text-xl font-bold border-2 border-slate-200 hover:bg-slate-50"
-              >
-                Watch Demo
-              </Button>
-            </motion.div>
-
-            <div className="flex items-center gap-4 pt-4">
-              <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map((i) => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-200 overflow-hidden">
-                    <img src={`https://i.pravatar.cc/100?u=${i}`} alt="User" />
-                  </div>
-                ))}
+              <div className="flex flex-wrap gap-4">
+                <Button 
+                  size="lg" 
+                  className="h-20 px-12 rounded-[2rem] text-2xl font-black bg-slate-950 text-white hover:bg-slate-900 animate-pulse-subtle shadow-2xl shadow-slate-950/20"
+                  onClick={scrollToMarketplace}
+                >
+                  Start Teleporting
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="h-20 px-12 rounded-[2rem] text-2xl font-black border-2 border-slate-200 hover:bg-slate-50 glass"
+                >
+                  Watch Demo
+                </Button>
               </div>
-              <p className="text-sm font-semibold text-slate-500">
-                <span className="text-slate-900">500+</span> sessions completed today
-              </p>
-            </div>
+              
+              <div className="flex items-center gap-3 ml-2">
+                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-green-500/10">
+                  <CheckCircle2 className="w-4 h-4 text-green-500" />
+                </div>
+                <p className="text-sm font-bold text-slate-500 uppercase tracking-widest">
+                  Trusted by <span className="text-slate-950">10,000+</span> users worldwide
+                </p>
+              </div>
+            </motion.div>
           </div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="relative lg:ml-auto"
+            className="relative lg:ml-auto animate-float"
           >
-            <div className="relative w-full max-w-[500px] aspect-square">
-              {/* 3D Illustration Placeholder */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-blue-400/20 rounded-[3rem] rotate-6 scale-95 blur-2xl" />
-              <div className="relative w-full h-full glass border-white/40 rounded-[3rem] shadow-2xl flex items-center justify-center overflow-hidden group">
-                <Globe className="w-48 h-48 text-primary animate-spin-slow opacity-20" />
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-white/20" />
-                <div className="absolute bottom-8 left-8 right-8 p-6 glass rounded-2xl border-white/20 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Live from Dubai</span>
+            <div className="relative w-full max-w-[550px] aspect-square">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/30 to-blue-400/30 rounded-[4rem] rotate-12 scale-95 blur-3xl opacity-50" />
+              <div className="relative w-full h-full glass border-white/40 rounded-[4rem] shadow-2xl flex items-center justify-center overflow-hidden group shadow-primary/20">
+                <Globe className="w-64 h-64 text-primary animate-spin-slow opacity-10" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-white/30" />
+                <div className="absolute bottom-10 left-10 right-10 p-8 glass rounded-3xl border-white/30 translate-y-4 group-hover:translate-y-0 transition-all duration-500 shadow-xl">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-4 h-4 bg-green-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+                    <span className="text-sm font-black uppercase tracking-widest text-primary">Live from London</span>
                   </div>
-                  <p className="font-bold text-slate-900">"Checking the villa view for you now..."</p>
+                  <p className="text-xl font-black text-slate-950">"Checking the historical archives for your research..."</p>
                 </div>
               </div>
             </div>
@@ -125,42 +152,110 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Why Teleport Section */}
-      <section className="py-24 px-6 bg-white">
+      {/* Why Choose Teleport Section */}
+      <section className="py-32 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-primary/20 transition-colors group">
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Globe className="w-7 h-7 text-primary" />
-              </div>
-              <h3 className="text-2xl font-bold text-slate-950 mb-3 tracking-tight">Global Access</h3>
-              <p className="text-slate-600 leading-relaxed font-medium">
-                Instantly connect with verified agents in 50+ major cities across the globe.
-              </p>
-            </div>
-            <div className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-primary/20 transition-colors group">
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Zap className="w-7 h-7 text-primary" />
-              </div>
-              <h3 className="text-2xl font-bold text-slate-950 mb-3 tracking-tight">Real-time Interaction</h3>
-              <p className="text-slate-600 leading-relaxed font-medium">
-                Experience the world in HD with ultra-low latency live video streaming.
-              </p>
-            </div>
-            <div className="p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-primary/20 transition-colors group">
-              <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Shield className="w-7 h-7 text-primary" />
-              </div>
-              <h3 className="text-2xl font-bold text-slate-950 mb-3 tracking-tight">Verified Proxies</h3>
-              <p className="text-slate-600 leading-relaxed font-medium">
-                All our agents are strictly vetted to ensure professional and reliable service.
-              </p>
-            </div>
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-black text-slate-950 mb-6 tracking-tighter">
+              Why Choose Teleport?
+            </h2>
+            <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto">
+              Our platform offers the most seamless virtual presence experience in the world.
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-4 gap-8">
+            {[
+              { title: "Global Reach", icon: Globe, desc: "Connect in 50+ major cities worldwide instantly." },
+              { title: "Secure Payments", icon: CreditCard, desc: "Transaction-level security for every session." },
+              { title: "Verified Proxies", icon: Shield, desc: "Strictly vetted professionals at your service." },
+              { title: "24/7 Support", icon: Headphones, desc: "Always here when you need a teleport." }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="p-10 rounded-[2.5rem] bg-slate-50/50 border border-slate-100 hover:border-primary/20 transition-all group hover:shadow-2xl hover:shadow-primary/5"
+              >
+                <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform group-hover:bg-primary group-hover:text-white text-primary">
+                  <item.icon className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl font-black text-slate-950 mb-4 tracking-tight">{item.title}</h3>
+                <p className="text-slate-500 leading-relaxed font-bold text-sm uppercase tracking-wider">
+                  {item.desc}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Marketplace Section */}
+      {/* Pricing Section */}
+      <section id="pricing" className="py-32 px-6 relative bg-slate-50/50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-24">
+            <h2 className="text-4xl md:text-6xl font-black text-slate-950 mb-6 tracking-tighter">
+              Simple & Transparent Pricing
+            </h2>
+            <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto">
+              Choose the plan that fits your teleportation needs.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-10">
+            {pricingTiers.map((tier, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className={`relative p-10 rounded-[3rem] bg-white border-2 transition-all hover:shadow-2xl hover:shadow-primary/10 ${
+                  tier.highlight ? 'border-primary shadow-xl shadow-primary/10 scale-105 z-10' : 'border-slate-100 shadow-sm shadow-blue-500/5'
+                }`}
+              >
+                {tier.highlight && (
+                  <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-black uppercase tracking-[0.2em] px-6 py-2 rounded-full shadow-lg">
+                    Most Popular
+                  </div>
+                )}
+                
+                <div className="mb-8">
+                  <h3 className="text-xl font-black text-slate-400 uppercase tracking-[0.2em] mb-4">{tier.name}</h3>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-5xl font-black text-slate-950">{tier.price}</span>
+                    <span className="text-slate-400 font-bold">{tier.period}</span>
+                  </div>
+                  <p className="text-slate-500 mt-4 font-medium">{tier.description}</p>
+                </div>
+
+                <div className="space-y-4 mb-10">
+                  {tier.features.map((feature, j) => (
+                    <div key={j} className="flex items-center gap-3">
+                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                      <span className="text-slate-600 font-bold text-sm tracking-tight">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <Button 
+                  className={`w-full h-16 rounded-2xl text-lg font-black transition-all ${
+                    tier.highlight 
+                      ? 'bg-primary text-white hover:bg-primary/90 shadow-xl shadow-primary/20' 
+                      : 'bg-slate-100 text-slate-950 hover:bg-slate-200'
+                  }`}
+                >
+                  {tier.button}
+                </Button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Teleport Section - Marketplaces */}
       <section id="marketplace" className="py-32 px-6 relative bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
