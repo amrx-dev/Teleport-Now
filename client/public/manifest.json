@@ -1,0 +1,16 @@
+{
+  "name": "Teleport",
+  "short_name": "Teleport",
+  "description": "Premium Proxy Booking Platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "https://cdn.replit.com/images/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
